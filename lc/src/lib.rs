@@ -15,6 +15,33 @@ pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
     vec![-1, -1]
 }
 
+pub fn is_palindrome(x: i32) -> bool {
+    if x < 0 {
+        return false;
+    }
+
+    let mut divisor: i32 = 1;
+    while divisor <= x / 10 {
+        divisor *= 10;
+    }
+
+    let mut y = x;
+    loop {
+        let right = y % 10;
+        let left = y / divisor;
+        if (left != right) {
+            return false;
+        }
+        y = (y % divisor) / 10;
+        divisor = divisor / 100;
+
+        if y == 0 {
+            break;
+        }
+    }
+    true
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -33,6 +60,12 @@ mod tests {
         let target = 100;
         let expected = vec![-1, -1];
         assert_eq!(two_sum(nums, target), expected);
+    }
+
+    #[test]
+    fn test_palindromic() {
+        assert_eq!(is_palindrome(121), true);
+        assert_eq!(is_palindrome(1410110141), true);
     }
 }
 
