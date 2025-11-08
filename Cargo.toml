@@ -1,4 +1,4 @@
-workspace = { members = ["mandelbrot", "lc"] }
+workspace = { members = ["mandelbrot", "lc", "euler"] }
 [package]
 name = "rs-playground"
 version = "0.1.0"
