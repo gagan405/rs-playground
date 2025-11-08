@@ -29,7 +29,7 @@ pub fn is_palindrome(x: i32) -> bool {
     loop {
         let right = y % 10;
         let left = y / divisor;
-        if (left != right) {
+        if left != right {
             return false;
         }
         y = (y % divisor) / 10;
@@ -68,5 +68,3 @@ mod tests {
         assert_eq!(is_palindrome(1410110141), true);
     }
 }
-
-fn main() {}
