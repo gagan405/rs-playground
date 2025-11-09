@@ -9,13 +9,10 @@ fn calculate_mandelbrot(
     width: usize,
     height: usize,
 ) -> Vec<Vec<usize>> {
-
     let mut rows: Vec<_> = Vec::with_capacity(width);
     for img_y in 0..height {
-
         let mut row: Vec<usize> = Vec::with_capacity(height);
         for img_x in 0..width {
-
             let x_percent = (img_x as f64 / width as f64);
             let y_percent = (img_y as f64 / height as f64);
             let cx = x_min + (x_max - x_min) * x_percent;
@@ -29,11 +26,7 @@ fn calculate_mandelbrot(
     rows
 }
 
-fn mandelbrot_at_point(
-    cx: f64,
-    cy: f64,
-    max_iters: usize,
-) -> usize {
+fn mandelbrot_at_point(cx: f64, cy: f64, max_iters: usize) -> usize {
     let mut z = Complex { re: 0.0, im: 0.0 };
     let c = Complex::new(cx, cy);
 
@@ -69,8 +62,7 @@ fn render_mandelbrot(escape_vals: Vec<Vec<usize>>) {
 }
 
 fn main() {
-    let mandelbrot = calculate_mandelbrot(1000, -2.0, 1.0, -1.0,
-                                          1.0, 100, 24);
+    let mandelbrot = calculate_mandelbrot(1000, -2.0, 1.0, -1.0, 1.0, 100, 24);
 
     render_mandelbrot(mandelbrot);
 }
