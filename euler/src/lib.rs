@@ -1,4 +1,6 @@
+mod primality;
 mod p719;
+mod p808;
 
 pub fn split_number(number: u64) -> Vec<Vec<u64>> {
     let digits = count_digits(number);
@@ -30,6 +32,34 @@ fn digits_of(n: u64) -> Vec<u8> {
         n /= 10;
     }
     digits.into_iter().rev().collect()
+}
+
+pub fn reverse_digits_of(n: u64) -> u64 {
+    let mut n = n;
+    let mut res = 0;
+    while n > 0 {
+        res = res * 10 + n % 10;
+        n /= 10;
+    }
+    res
+}
+
+pub fn is_perfect_square(x: u64) -> bool {
+    match x & 0xF {
+        0 | 1 | 4 | 9 => (),
+        _ => return false,
+    }
+
+    if (x % 3 > 1) || (x % 5 > 4) {
+        return false;
+    }
+
+    if !matches!(x % 7, 0 | 1 | 2 | 4) {
+        return false;
+    }
+
+    let r = (x as f64).sqrt() as u64;
+    r * r == x
 }
 
 pub fn split_sum(number: u64, target: u64) -> bool {
@@ -160,5 +190,17 @@ mod tests {
     fn test_split_digits_sum() {
         assert_eq!(is_sum_of_decimal_splits(82, 6724), true);
         assert_eq!(is_sum_of_decimal_splits(99, 9801), true);
+    }
+
+    #[test]
+    fn test_reverse_digits_of() {
+        assert_eq!(reverse_digits_of(6724), 4276);
+    }
+
+    #[test]
+    fn test_is_perfect_square() {
+        assert_eq!(is_perfect_square(6724), true);
+        assert_eq!(is_perfect_square(67), false);
+        assert_eq!(is_perfect_square(9801), true);
     }
 }
