@@ -1,15 +1,12 @@
 use std::sync::OnceLock;
 
 const LOOKUP_TABLE: [i64; 25] = [
-    2, 3, 5, 7, 11, 13, 17, 19, 23, 29,
-    31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
-    73, 79, 83, 89, 97,
+    2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97,
 ];
 
 static PRIMES: OnceLock<Vec<usize>> = OnceLock::new();
 
 pub fn is_prime(n: i64) -> bool {
-
     fn is_prime_small(x: i64) -> bool {
         if x < 2 {
             return false;
@@ -44,8 +41,9 @@ pub fn is_prime(n: i64) -> bool {
     let mut i = 101;
 
     while i <= root {
-        if (i < *(LOOKUP_TABLE.last().unwrap()) && is_prime_small(i) && n % i == 0) ||
-            (i > *(LOOKUP_TABLE.last().unwrap()) && n % i == 0) {
+        if (i < *(LOOKUP_TABLE.last().unwrap()) && is_prime_small(i) && n % i == 0)
+            || (i > *(LOOKUP_TABLE.last().unwrap()) && n % i == 0)
+        {
             return false;
         }
         i += 2;

@@ -1,7 +1,7 @@
 use crate::primality::is_prime_sieve;
 use crate::{is_perfect_square, reverse_digits_of};
 
-pub fn reversible_primes(limit: u64, count:i32) -> u64 {
+pub fn reversible_primes(limit: u64, count: i32) -> u64 {
     let mut result: Vec<u64> = Vec::new();
     let mut itr = 0;
     for i in 1..=limit {

@@ -1,6 +1,7 @@
-mod primality;
 mod p719;
 mod p808;
+mod p932;
+mod primality;
 
 pub fn split_number(number: u64) -> Vec<Vec<u64>> {
     let digits = count_digits(number);
@@ -119,6 +120,44 @@ fn is_sum_of_decimal_splits(target: i64, number: i64) -> bool {
     false
 }
 
+fn is_sum_of_decimal_bi_splits(target: i64, number: i64) -> bool {
+    if target < 0 || target > number {
+        return false;
+    }
+    if target == number {
+        return true;
+    }
+
+    let mut num_digits = if target > 0 {
+        (target as f64).log10() as i32 + 1
+    } else {
+        0
+    };
+
+    if target > 0 && number > 0 && (target as f64).log10() as i32 == (number as f64).log10() as i32
+    {
+        num_digits -= 1;
+    }
+
+    if num_digits == 0 {
+        return false;
+    }
+
+    let mut divisor = 10_i64.pow(num_digits as u32);
+
+    while divisor > 1 {
+        let left = number / divisor;
+        let right = number % divisor;
+
+        if right != 0 && (right != number % (divisor / 10)) && left + right == target {
+            return true;
+        }
+        divisor /= 10;
+    }
+
+    false
+}
+
 pub fn count_digits(mut n: u64) -> u32 {
     if n == 0 {
         return 1;
@@ -202,5 +241,12 @@ mod tests {
         assert_eq!(is_perfect_square(6724), true);
         assert_eq!(is_perfect_square(67), false);
         assert_eq!(is_perfect_square(9801), true);
+    }
+
+    #[test]
+    fn test_is_sum_of_decimal_bi_splits() {
+        assert!(is_sum_of_decimal_bi_splits(9, 81));
+        assert!(is_sum_of_decimal_bi_splits(45, 2025));
+        assert!(!is_sum_of_decimal_bi_splits(99, 9801));
     }
 }
