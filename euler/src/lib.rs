@@ -2,6 +2,7 @@ mod p719;
 mod p808;
 mod p932;
 mod primality;
+mod p872;
 
 pub fn split_number(number: u64) -> Vec<Vec<u64>> {
     let digits = count_digits(number);
@@ -43,6 +44,20 @@ pub fn reverse_digits_of(n: u64) -> u64 {
         n /= 10;
     }
     res
+}
+
+pub fn binary_to_list_of_numbers(input: i64) -> Vec<i64> {
+    let mut n = input;
+    let mut count = 0;
+    let mut bits: Vec<i64> = Vec::new();
+    while n > 0 {
+        if n & 1 == 1 {
+            bits.push(1 << count);
+        }
+        n = n >> 1;
+        count += 1;
+    }
+    bits
 }
 
 pub fn is_perfect_square(x: u64) -> bool {
@@ -248,5 +263,11 @@ mod tests {
         assert!(is_sum_of_decimal_bi_splits(9, 81));
         assert!(is_sum_of_decimal_bi_splits(45, 2025));
         assert!(!is_sum_of_decimal_bi_splits(99, 9801));
+    }
+
+    #[test]
+    fn test_binary_to_list() {
+        assert_eq!(binary_to_list_of_numbers(5), vec![1, 4]);
+        assert_eq!(binary_to_list_of_numbers(6), vec![2, 4]);
     }
 }
